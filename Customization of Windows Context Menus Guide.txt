@@ -1,0 +1,81 @@
+CONTEXT MENU CUSTOMIZATION GUIDE:
+*Using registry edits. 
+
+This guide describes how to edit and customize the context menus accessed by:
+
+-right clicking on a FOLDER
+-shift + right click on a FOLDER
+-right clicking on the BACKGROUND OF a folder, or desktop
+-shift + right click on the BACKGROUND Of a folder, or desktop
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+BACKGROUND AND DESCRIPTION
+
+In the registry, there are 2 directories corresponding to the above referenced
+menus.
+
+For the BACKGROUND context menus, the registry directory that's changed to customize
+these menus is:
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\background\shell
+
+For the FOLDER context menus, the registry directory that's changed to
+customize these menus is: Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell
+
+The shift + right click versions of the FOLDER and BACKGROUND context menus are the 
+"Extended" FOLDER and "Extended" BACKGROUND context menus. 
+
+Each sub-directory in these two directories corresponds to an option
+within their respective menus. The contents of these sub-directories determines
+their attributes and functionality. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ADDING AN OPTION TO A CONTEXT MENU FOR RIGHT CLICK AND SHIFT + RIGHT CLICK
+
+To add an option to one of these context menus, right click on the respective directory 
+for either FOLDER or BACKGROUND menus and click new>key. This will create a new 
+subdirectory; it's name does not matter. 
+
+Click on this new subdirectory and,
+in the windows registry editor, on the right pane you will see a value
+called "(Default)" of type "REG_SZ". Double click on this value to change it's
+Data. The value's data will be the name of the option in the context menu.
+After doing this, you should be able to access that context menu with just a
+right click and see your option immediately - no need to refresh or close anything.
+
+To give your option a command that is run when the option is selected, create
+a new key (or subdirectory) in the option subdirectory you just made. Call
+this new key "command". This name DOES matter. 
+
+Go to the key you just made, called "command", and go to it's value called
+"(Default)" on the right pane of windows registry editor. Double click the value
+and change its data to the command you'd like to run. To test that it's working, you can put
+"C:\WINDOWS\system32\notepad.exe". When you access that context menu and
+select your option, it should open a new instance of notepad. 
+
+-ADDING AN OPTION TO A CONTEXT MENU FOR ONLY SHIFT + RIGHT CLICK
+
+To make an option show up only in the shift+right click version of a menu, follow 
+the steps above for making an option, then right click on its key in that menu's 
+subdirectory and add a string value called "Extended". No need to give it any data. 
+It should then only be seen after shift+right click in the "Extended" context menu. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+REMOVING AN OPTION FROM A CONTEXT MENU
+
+To remove an option from a context menu, you can simply remove it's key from
+that menu's directory, but that solution is hard to undo if you ever want that
+option back. A better solution is to simply disable it. This can be done by
+adding a string value called "LegacyDisable" to that option's key. It then
+won't show up in its context menu. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OTHER CUSTOMIZATIONS
+
+-ADDING ICONS
+
+To add an icon to an option, you can add a string value to that option's key
+called "Icon". Change the data of the string value you just made to the full
+path of an application (don't forget the file extension). The option will then
+take on the icon of that application. This doesn't always work for all
+applications, and may put a default icon in instead. You can get around this
+by putting the path directly to a icon file (.ico) .
